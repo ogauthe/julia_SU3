@@ -56,6 +56,7 @@ for r1A = 0:10
 end
 
 
+println()
 # quark ⊗ antiquark = meson ⊕ gluon
 degen, irreps = r3 ⊗ r3b
 println("3 ⊗ 3b =")
@@ -64,6 +65,7 @@ for (d, irr) in zip(degen, irreps)
     display(irr)
 end
 
+println()
 # fusion ring has inner degeneracies: 8 ⊗ 8 = 1 ⊕ 2⋅8 ⊕ 10 ⊕ 10b ⊕ 27
 degen, irreps = r8 ⊗ r8
 println("8 ⊗ 8 =")
