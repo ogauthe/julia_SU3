@@ -43,19 +43,19 @@ function Base.show(io::IO, ::MIME"text/plain", yt::SU3)
         println("●")
         return
     end
-    println("┌─" * "┬─" ^ (yt.row1 - 1) * "┐")
+    println("┌─" * "┬─"^(yt.row1 - 1) * "┐")
     if yt.row2 == 0
-        println("└─" * "┴─" ^ (yt.row1 - 1) * "┘")
+        println("└─" * "┴─"^(yt.row1 - 1) * "┘")
         return
     end
-        println(
-            "├─",
-            "┼─" ^ (yt.row2 - 1 + (yt.row1 > yt.row2)),
-            "┴─" ^ max(0, (yt.row1 - yt.row2 - 1)),
-            "┤" ^ (yt.row2 == yt.row1),
-            "┘" ^ (yt.row1 > yt.row2)
-        )
-        println("└─" * "┴─"^ (yt.row2 - 1) * "┘")
+    println(
+        "├─",
+        "┼─"^(yt.row2 - 1 + (yt.row1 > yt.row2)),
+        "┴─"^max(0, (yt.row1 - yt.row2 - 1)),
+        "┤"^(yt.row2 == yt.row1),
+        "┘"^(yt.row1 > yt.row2),
+    )
+    println("└─" * "┴─"^(yt.row2 - 1) * "┘")
     return
 end
 
@@ -94,7 +94,7 @@ function ⊗(left::SU3, right::SU3)
         a3max2 = a23  # a3 <= a2 + a3
         a3max3 = right.row1 - right.row2  # more a than b, right to left: b2 + b3 <= a1 + a2
         a3max = min(a3max1, a3max2, a3max3)
-        for a3 = a3min: a3max
+        for a3 = a3min:a3max
             a2 = a23 - a3
             row1a = left.row1 + right.row1 - a23
             row2a = left.row2 + a23 - a3
@@ -108,7 +108,7 @@ function ⊗(left::SU3, right::SU3)
             b3max3 = right.row1 - a3  # more a than b, right to left: b2 <= a1
             b3max4 = row2a - a3  # no b below b: row2a >= row3ab
             b3max = min(b3max1, b3max2, b3max3, b3max4)
-            for b3 = b3min: b3max
+            for b3 = b3min:b3max
                 b2 = right.row2 - b3
                 row2ab = row2a + b2
                 row3ab = a3 + b3
@@ -119,7 +119,7 @@ function ⊗(left::SU3, right::SU3)
         end
     end
 
-    irreps = sort(unique(out), by=yt->(dimension(yt), nboxes(yt), yt.row2))
+    irreps = sort(unique(out), by = yt -> (dimension(yt), nboxes(yt), yt.row2))
     degen = [count(==(irr), out) for irr in irreps]
 
     return degen, irreps
